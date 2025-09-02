@@ -62,14 +62,14 @@ type Response struct {
 }
 
 type Body struct {
-	Id      int    `json:"id"`
+	Id      int    `json:"id" binding:"required"`
 	Message string `json:"msg"`
 	Gender  string `json:"gender"`
 }
 
 func ValidateBody(body Body) error {
 	if body.Id <= 0 {
-		return errors.New("id tidak boleh dibawah 0")
+		return errors.New("id harus diatas 0")
 	}
 	if len(body.Message) < 8 {
 		return errors.New("panjang pesan harus diatas 8 karakter")
