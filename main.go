@@ -22,7 +22,7 @@ func main() {
 		})
 	})
 	// jalankan engine gin
-	router.Run(":8080")
+	router.Run("localhost:3000")
 }
 
 type Response struct {
