@@ -26,6 +26,7 @@ func InitRouter(db *pgxpool.Pool) *gin.Engine {
 	InitPingRouter(router)
 	InitStudentRouter(router, db)
 	InitProductRouter(router, db)
+	InitAuthRouter(router, db)
 
 	// catch all route
 	router.NoRoute(func(ctx *gin.Context) {
