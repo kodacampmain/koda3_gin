@@ -86,8 +86,19 @@ func (a *AuthHandler) Login(ctx *gin.Context) {
 		})
 		return
 	}
-	// jika match, maka kirim response
+	// jika match, maka buatkan jwt dan kirim via response
+	claims := pkg.NewJWTClaims(student.Id, student.Role)
+	jwtToken, err := claims.GenToken()
+	if err != nil {
+		log.Println("Internal Server Error.\nCause: ", err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   "internal server error",
+		})
+		return
+	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
+		"token":   jwtToken,
 	})
 }
