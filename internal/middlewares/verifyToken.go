@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -25,7 +26,7 @@ func VerifyToken(ctx *gin.Context) {
 
 	var claims pkg.Claims
 	if err := claims.VerifyToken(token); err != nil {
-		if err == jwt.ErrTokenInvalidIssuer {
+		if strings.Contains(err.Error(), jwt.ErrTokenInvalidIssuer.Error()) {
 			log.Println("JWT Error.\nCause: ", err.Error())
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"success": false,
@@ -33,7 +34,7 @@ func VerifyToken(ctx *gin.Context) {
 			})
 			return
 		}
-		if err == jwt.ErrTokenExpired {
+		if strings.Contains(err.Error(), jwt.ErrTokenExpired.Error()) {
 			log.Println("JWT Error.\nCause: ", err.Error())
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"success": false,
@@ -41,6 +42,7 @@ func VerifyToken(ctx *gin.Context) {
 			})
 			return
 		}
+		fmt.Println(jwt.ErrTokenExpired)
 		log.Println("Internal Server Error.\nCause: ", err.Error())
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
