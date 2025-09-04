@@ -14,4 +14,5 @@ func InitStudentRouter(router *gin.Engine, db *pgxpool.Pool) {
 	sh := handlers.NewStudentHandler(sr)
 
 	studentRouter.GET("", middlewares.VerifyToken, middlewares.Access("user", "admin"), sh.GetStudent)
+	studentRouter.PATCH("", middlewares.VerifyToken, middlewares.Access("user", "admin"), sh.EditImage)
 }

@@ -22,6 +22,8 @@ func InitRouter(db *pgxpool.Pool) *gin.Engine {
 
 	// router.Use(cors.New(config))
 
+	router.Static("/img", "public")
+
 	// setup routing
 	InitPingRouter(router)
 	InitStudentRouter(router, db)

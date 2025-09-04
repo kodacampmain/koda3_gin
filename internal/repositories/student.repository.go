@@ -41,3 +41,15 @@ func (s *StudentRepository) GetStudentData(reqContext context.Context, offset, l
 }
 
 // func (s *StudentRepository) Add(){}
+func (s *StudentRepository) EditImage(rctx context.Context, images string, id int) (models.Student, error) {
+	sql := "UPDATE students SET images=$1 WHERE id=$2 RETURNING id, name, images"
+	values := []any{images, id}
+
+	var student models.Student
+	err := s.db.QueryRow(rctx, sql, values...).Scan(&student.Id, &student.Name, &student.Images)
+	if err != nil {
+		log.Println("Internal server error.\nCause: ", err.Error())
+		return models.Student{}, err
+	}
+	return student, nil
+}
