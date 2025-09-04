@@ -39,3 +39,5 @@ func (s *StudentRepository) GetStudentData(reqContext context.Context, offset, l
 	}
 	return students, nil
 }
+
+// func (s *StudentRepository) Add(){}

@@ -35,3 +35,5 @@ func (p *ProductRepository) InsertNewProduct(rctx context.Context, body models.P
 	values := []any{body.Name, body.PromoId, body.Price}
 	return p.db.Exec(rctx, sql, values...)
 }
+
+// func (p *ProductRepository) Add() {}
