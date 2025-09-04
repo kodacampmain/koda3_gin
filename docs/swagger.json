@@ -1,0 +1,123 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "RESTful API created using gin for Koda Batch 3",
+        "title": "KODA 3 GIN",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/ping": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ping"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Header for requestID",
+                        "name": "X-Request-ID",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Header for body type",
+                        "name": "Content-Type",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PingResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping/:id/:param2": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ping"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "path params for id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "path params for param2",
+                        "name": "param2",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "query for q",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PingWithParam"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.PingResponse": {
+            "type": "object",
+            "properties": {
+                "contentType": {
+                    "type": "string",
+                    "example": "application/json"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "pong"
+                },
+                "requestId": {
+                    "type": "integer",
+                    "example": 123
+                }
+            }
+        },
+        "handlers.PingWithParam": {
+            "type": "object",
+            "properties": {
+                "param": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "param2": {
+                    "type": "string",
+                    "example": "action"
+                },
+                "q": {
+                    "type": "string",
+                    "example": "habib"
+                }
+            }
+        }
+    }
+}

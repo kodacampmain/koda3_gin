@@ -1,0 +1,82 @@
+basePath: /
+definitions:
+  handlers.PingResponse:
+    properties:
+      contentType:
+        example: application/json
+        type: string
+      message:
+        example: pong
+        type: string
+      requestId:
+        example: 123
+        type: integer
+    type: object
+  handlers.PingWithParam:
+    properties:
+      param:
+        example: 1
+        type: integer
+      param2:
+        example: action
+        type: string
+      q:
+        example: habib
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: RESTful API created using gin for Koda Batch 3
+  title: KODA 3 GIN
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      parameters:
+      - description: Header for requestID
+        in: header
+        name: X-Request-ID
+        required: true
+        type: integer
+      - description: Header for body type
+        in: header
+        name: Content-Type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PingResponse'
+      tags:
+      - ping
+  /ping/:id/:param2:
+    get:
+      parameters:
+      - description: path params for id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: path params for param2
+        in: path
+        name: param2
+        required: true
+        type: string
+      - description: query for q
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PingWithParam'
+      tags:
+      - ping
+swagger: "2.0"

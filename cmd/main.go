@@ -9,6 +9,11 @@ import (
 	"github.com/kodacampmain/koda3_gin/internal/routers"
 )
 
+// @title 			KODA 3 GIN
+// @version 		1.0
+// @description 	RESTful API created using gin for Koda Batch 3
+// @host			localhost:3000
+// @basePath		/
 func main() {
 	// manual load env
 	// if err := godotenv.Load(); err != nil {
