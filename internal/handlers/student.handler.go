@@ -5,12 +5,14 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kodacampmain/koda3_gin/internal/models"
 	"github.com/kodacampmain/koda3_gin/internal/repositories"
+	"github.com/kodacampmain/koda3_gin/internal/utils"
 	"github.com/kodacampmain/koda3_gin/pkg"
 )
 
@@ -69,26 +71,26 @@ func (s *StudentHandler) EditImage(ctx *gin.Context) {
 		})
 		return
 	}
-	claims, isExist := ctx.Get("claims")
-	if !isExist {
-		ctx.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-			"success": false,
-			"error":   "Silahkan login kembali",
-		})
-		return
-	}
+	claims, _ := ctx.Get("claims")
 	user, ok := claims.(pkg.Claims)
 	if !ok {
-		// log.Println("Cannot cast claims into pkg.claims")
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"success": false,
-			"error":   "Internal server error",
-		})
+		utils.HandleError(ctx, http.StatusInternalServerError, "Internal Server Error", "Cannot cast into pkg.claims")
 		return
 	}
 	// proses menyimpan gambar di directory
-	file := body.Images
+	file := body.Image
+
+	if file.Size > 2*1024 {
+		// abort upload
+	}
+
 	ext := filepath.Ext(file.Filename)
+
+	re := regexp.MustCompile("(png|jpg|jpeg|webp)$")
+	if !re.Match([]byte(ext)) {
+		// abort upload
+	}
+
 	filename := fmt.Sprintf("%d_images_%d%s", time.Now().UnixNano(), user.UserId, ext)
 	location := filepath.Join("public", filename)
 	if err := ctx.SaveUploadedFile(file, location); err != nil {
@@ -112,5 +114,25 @@ func (s *StudentHandler) EditImage(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"data":    student,
+	})
+}
+
+func (s *StudentHandler) GetStudentById(ctx *gin.Context) {
+	// ambil id dari claims/token
+	claims, _ := ctx.Get("claims")
+	user, _ := claims.(pkg.Claims)
+
+	student, err := s.sr.GetStudentById(ctx.Request.Context(), user.UserId)
+	if err != nil {
+		utils.HandleError(ctx, http.StatusInternalServerError, err.Error(), "Internal Server Error")
+		return
+	}
+
+	utils.HandleResponse(ctx, http.StatusOK, models.StudentResponse{
+		SuccessResponse: models.SuccessResponse{
+			Success: true,
+			Status:  200,
+		},
+		Data: student,
 	})
 }

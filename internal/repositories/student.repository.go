@@ -18,22 +18,22 @@ func NewStudentRepository(db *pgxpool.Pool) *StudentRepository {
 	}
 }
 
-func (s *StudentRepository) GetStudentData(reqContext context.Context, offset, limit int) ([]models.Student, error) {
+func (s *StudentRepository) GetStudentData(reqContext context.Context, offset, limit int) ([]models.StudentData, error) {
 	sql := "SELECT id, name, role FROM students LIMIT $2 OFFSET $1"
 	values := []any{offset, limit}
 	rows, err := s.db.Query(reqContext, sql, values...)
 	if err != nil {
 		log.Println("Internal Server Error: ", err.Error())
-		return []models.Student{}, err
+		return []models.StudentData{}, err
 	}
 	defer rows.Close()
-	var students []models.Student
+	var students []models.StudentData
 	// membaca rows/record
 	for rows.Next() {
-		var student models.Student
+		var student models.StudentData
 		if err := rows.Scan(&student.Id, &student.Name, &student.Role); err != nil {
 			log.Println("Scan Error, ", err.Error())
-			return []models.Student{}, err
+			return []models.StudentData{}, err
 		}
 		students = append(students, student)
 	}
@@ -41,15 +41,25 @@ func (s *StudentRepository) GetStudentData(reqContext context.Context, offset, l
 }
 
 // func (s *StudentRepository) Add(){}
-func (s *StudentRepository) EditImage(rctx context.Context, images string, id int) (models.Student, error) {
-	sql := "UPDATE students SET images=$1 WHERE id=$2 RETURNING id, name, images"
+func (s *StudentRepository) EditImage(rctx context.Context, images string, id int) (models.StudentData, error) {
+	sql := "UPDATE students SET image=$1 WHERE id=$2 RETURNING id, name, image"
 	values := []any{images, id}
 
-	var student models.Student
-	err := s.db.QueryRow(rctx, sql, values...).Scan(&student.Id, &student.Name, &student.Images)
+	var student models.StudentData
+	err := s.db.QueryRow(rctx, sql, values...).Scan(&student.Id, &student.Name, &student.Image)
 	if err != nil {
 		log.Println("Internal server error.\nCause: ", err.Error())
-		return models.Student{}, err
+		return models.StudentData{}, err
+	}
+	return student, nil
+}
+
+func (s *StudentRepository) GetStudentById(rctx context.Context, id int) (models.StudentData, error) {
+	sql := "SELECT id, name, image FROM students WHERE id = $1"
+	values := []any{id}
+	var student models.StudentData
+	if err := s.db.QueryRow(rctx, sql, values...).Scan(&student.Id, &student.Name, &student.Image); err != nil {
+		return models.StudentData{}, err
 	}
 	return student, nil
 }

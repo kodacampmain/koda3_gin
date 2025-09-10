@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"log"
 	"net/http"
 	"slices"
 
@@ -18,6 +19,8 @@ func CORSMiddleware(ctx *gin.Context) {
 	origin := ctx.GetHeader("Origin")
 	if slices.Contains(whitelist, origin) {
 		ctx.Header("Access-Control-Allow-Origin", origin)
+	} else {
+		log.Printf("Origin is not in the whitelist: %s", origin)
 	}
 	// header untuk preflight cors
 	ctx.Header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")

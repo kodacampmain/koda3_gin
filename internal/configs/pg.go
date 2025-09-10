@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -20,4 +21,14 @@ func InitDB() (*pgxpool.Pool, error) {
 
 func TestDB(db *pgxpool.Pool) error {
 	return db.Ping(context.Background())
+}
+
+func InitDBClient() (*pgx.Conn, error) {
+	dbUser := os.Getenv("DBUSER")
+	dbPass := os.Getenv("DBPASS")
+	dbHost := os.Getenv("DBHOST")
+	dbPort := os.Getenv("DBPORT")
+	dbName := os.Getenv("DBNAME")
+	connstring := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPass, dbHost, dbPort, dbName)
+	return pgx.Connect(context.Background(), connstring)
 }

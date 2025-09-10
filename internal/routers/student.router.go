@@ -12,7 +12,11 @@ func InitStudentRouter(router *gin.Engine, db *pgxpool.Pool) {
 	studentRouter := router.Group("/students")
 	sr := repositories.NewStudentRepository(db)
 	sh := handlers.NewStudentHandler(sr)
+	// gin.HandlerFunc
+	studentRouter.Use(middlewares.VerifyToken)
+	studentRouter.Use(middlewares.Access("user", "admin"))
 
-	studentRouter.GET("", middlewares.VerifyToken, middlewares.Access("user", "admin"), sh.GetStudent)
-	studentRouter.PATCH("", middlewares.VerifyToken, middlewares.Access("user", "admin"), sh.EditImage)
+	studentRouter.GET("", sh.GetStudent)
+	studentRouter.GET("/profile", sh.GetStudentById)
+	studentRouter.PATCH("", sh.EditImage)
 }

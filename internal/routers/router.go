@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/kodacampmain/koda3_gin/internal/middlewares"
-	"github.com/kodacampmain/koda3_gin/internal/models"
+	"github.com/kodacampmain/koda3_gin/internal/utils"
 
 	docs "github.com/kodacampmain/koda3_gin/docs"
 	swaggerfiles "github.com/swaggo/files"
@@ -39,10 +39,7 @@ func InitRouter(db *pgxpool.Pool) *gin.Engine {
 
 	// catch all route
 	router.NoRoute(func(ctx *gin.Context) {
-		ctx.JSON(http.StatusNotFound, models.Response{
-			Message: "Rute Salah",
-			Status:  "Rute Tidak Ditemukan",
-		})
+		utils.HandleError(ctx, http.StatusNotFound, "rute tidak ditemukan", "404 Route")
 	})
 
 	return router
