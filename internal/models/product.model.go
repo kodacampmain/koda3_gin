@@ -19,6 +19,11 @@ type ProductResponse struct {
 	Data ProductData `json:"data"`
 }
 
+type ProductsResponse struct {
+	SuccessResponse
+	Data []ProductData `json:"data"`
+}
+
 type ProductData struct {
 	Id        int        `db:"id"`
 	Name      string     `db:"name"`

@@ -2,6 +2,7 @@ package main
 
 import (
 	// "github.com/joho/godotenv"
+	"context"
 	"log"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -37,8 +38,18 @@ func main() {
 		return
 	}
 	log.Println("DB Connected")
+
+	// inisialisasi redis
+	rdb := configs.InitRedis()
+	if cmd := rdb.Ping(context.Background()); cmd.Err() != nil {
+		log.Println("Ping to Redis failed\nCause: ", cmd.Err().Error())
+		return
+	}
+	log.Println("Redis Connected")
+	defer rdb.Close()
+
 	// inisialisasi engine gin
-	router := routers.InitRouter(db)
+	router := routers.InitRouter(db, rdb)
 	// client => (router => handler => repo => handler) => client
 	// jalankan engine gin
 	router.Run("localhost:3000")

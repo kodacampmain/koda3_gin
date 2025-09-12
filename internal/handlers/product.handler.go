@@ -79,3 +79,18 @@ func (p *ProductHandler) EditProduct(ctx *gin.Context) {
 		Data: product,
 	})
 }
+
+func (p *ProductHandler) GetProducts(ctx *gin.Context) {
+	data, err := p.pr.GetProducts(ctx.Request.Context())
+	if err != nil {
+		utils.HandleError(ctx, http.StatusInternalServerError, err.Error(), "Internal Server Error")
+		return
+	}
+	utils.HandleResponse(ctx, http.StatusOK, models.ProductsResponse{
+		SuccessResponse: models.SuccessResponse{
+			Success: true,
+			Status:  200,
+		},
+		Data: data,
+	})
+}
