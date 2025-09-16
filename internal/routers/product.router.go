@@ -17,3 +17,9 @@ func InitProductRouter(router *gin.Engine, db *pgxpool.Pool, rdb *redis.Client) 
 	productRouter.PATCH("/:productId", productHandler.EditProduct)
 	productRouter.GET("/", productHandler.GetProducts)
 }
+
+// /products/order			GET	mengambil order aktif/keranjang
+// /products/:productId		GET	mengambil product detail
+
+// GET http://localhost:3000/products/order
+// GET http://localhost:3000/products/1

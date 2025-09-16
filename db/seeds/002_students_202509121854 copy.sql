@@ -1,0 +1,16 @@
+INSERT INTO public.students (id,"name","password","role",image) VALUES
+	 (1,'Iman','$argon2id$v=19$m=65536,t=2,p=1$D69XWPa8Lr+yc+o3pxXjQg$LYSCd1wy0F2xfY978hTPiQsZZ0kACdXA4swTpvL1vjs','user',NULL),
+	 (2,'Redha','$argon2id$v=19$m=65536,t=2,p=1$dyCullY57KSXinI+knXQBw$uqqWSAGLYVMXmE6DNa5s8CPE+hXlNQB7Z846Y/KXkhA','user',NULL),
+	 (3,'Rieza','$argon2id$v=19$m=65536,t=2,p=1$FbKzTF7AmgS7H9a1si088Q$ofibXD3IkfHMkGMwKOkGE8Ys/6o5ino1GTViqWE+xLI','user',NULL),
+	 (4,'Sandi','$argon2id$v=19$m=65536,t=2,p=1$BAhHOIM/8PUHa99L5KCbOg$Kdyoxqsb1TVNA2H4/reM071oCkau80ymcMXinsn4PqI','user',NULL),
+	 (5,'Rohman','$argon2id$v=19$m=65536,t=2,p=1$vfifycMpQtwvJXiTYIpnHA$70bWgI9+PTFyI1cp3Q2++MPOAHQMVbmA+XxMxnfRs44','user',NULL),
+	 (6,'Denis','$argon2id$v=19$m=65536,t=2,p=1$gesAc1gwFPcRrtxLQiVR3g$EdQbC4e08G0YmbGv5AWaaDET8ZNA937IDdamEPFhPP8','user',NULL),
+	 (7,'Pradana','$argon2id$v=19$m=65536,t=2,p=1$rnZREBj+lcJT9msDsVZWhw$F8WWdq6jG1SlJsPpxYCnKnndVe4BkCNxkrsq+etrxxQ','user',NULL),
+	 (8,'Raissa','$argon2id$v=19$m=65536,t=2,p=1$H06OQ0HXEs/reZqUlMG+CA$nt2oMf0GLVGdHxvvT9ZeP05xh6IjYbfTnzhIKxeJey8','user',NULL),
+	 (9,'Hakim','$argon2id$v=19$m=65536,t=2,p=1$H06OQ0HXEs/reZqUlMG+CA$nt2oMf0GLVGdHxvvT9ZeP05xh6IjYbfTnzhIKxeJey8','user',NULL),
+	 (10,'Ahmad','$argon2id$v=19$m=65536,t=2,p=1$YYzt8HJLAbzVbAzRTu5ktA$D7V7o4Du7WsPleMmpax/t4uC/zyTP1AFmfr2vkERIYs','admin','1756984730295625200_images_10.png'),
+	 (12,'Febri',NULL,'user',NULL),
+	 (14,'Yusuf',NULL,'user',NULL),
+	 (41,'Farid',NULL,'user',NULL),
+	 (44,'Insan',NULL,'user',NULL),
+	 (42,'Titus',NULL,'user',NULL);

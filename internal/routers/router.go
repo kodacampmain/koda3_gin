@@ -20,7 +20,7 @@ func InitRouter(db *pgxpool.Pool, rdb *redis.Client) *gin.Engine {
 	router.Use(middlewares.CORSMiddleware)
 
 	docs.SwaggerInfo.BasePath = "/"
-	router.GET("/wekekwek/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// config := cors.Config{
 	// 	AllowOrigins: []string{"http://127.0.0.1:5500", "http://127.0.0.1:3001"},

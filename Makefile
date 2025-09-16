@@ -17,10 +17,27 @@ migrate-full:
 	make migrate-up insert-seed
 
 print-db-url:
-	echo $(DBURL)
+	@echo $(DBURL)
 
 print-hello:
-	echo "hello"
+	@echo "hello"
 
 hello-dburl:
-	make print-db-url print-hello
+	@make print-db-url print-hello
+
+
+SEED_PATH=db/seeds
+seed:
+	@echo "Applying seed data..."
+	@foreach ($$file in $(SEED_PATH)/*.sql) {
+    	echo "Executing seed file: $$file"
+	}
+# 	@for file in $(SEED_PATH)/*.sql; do \
+# 		echo "Executing seed file: $$file"; \
+# 	done
+
+print_files:
+	@echo "Listing files in $(SEED_PATH):"
+	@for %%f in ($(SEED_PATH)\*) do ( \
+		echo %%~nxf \
+	)
