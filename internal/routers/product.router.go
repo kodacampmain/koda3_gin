@@ -13,9 +13,9 @@ func InitProductRouter(router *gin.Engine, db *pgxpool.Pool, rdb *redis.Client) 
 	productRepository := repositories.NewProductRepository(db, rdb)
 	productHandler := handlers.NewProductHandler(productRepository)
 
-	productRouter.POST("/", productHandler.AddNewProduct)
+	productRouter.POST("", productHandler.AddNewProduct)
 	productRouter.PATCH("/:productId", productHandler.EditProduct)
-	productRouter.GET("/", productHandler.GetProducts)
+	productRouter.GET("", productHandler.GetProducts)
 }
 
 // /products/order			GET	mengambil order aktif/keranjang
