@@ -114,7 +114,9 @@ func (p *ProductRepository) GetProducts(rctx context.Context) ([]models.ProductD
 		if err := rows.Scan(&product.Id, &product.Name, &product.PromoId, &product.Price, &product.CreatedAt, &product.UpdatedAt); err != nil {
 			return []models.ProductData{}, err
 		}
+		// log.Println(product)
 		products = append(products, product)
+		// log.Println(products)
 	}
 
 	// renew cache

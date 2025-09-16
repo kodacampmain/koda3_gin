@@ -86,6 +86,7 @@ func (p *ProductHandler) GetProducts(ctx *gin.Context) {
 		utils.HandleError(ctx, http.StatusInternalServerError, err.Error(), "Internal Server Error")
 		return
 	}
+	// log.Println(data)
 	utils.HandleResponse(ctx, http.StatusOK, models.ProductsResponse{
 		SuccessResponse: models.SuccessResponse{
 			Success: true,

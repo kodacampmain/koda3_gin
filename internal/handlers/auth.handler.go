@@ -34,6 +34,7 @@ func (a *AuthHandler) Login(ctx *gin.Context) {
 	// menerima body
 	var body models.StudentAuth
 	if err := ctx.ShouldBind(&body); err != nil {
+		log.Println(err.Error())
 		if strings.Contains(err.Error(), "required") {
 			utils.HandleError(ctx, http.StatusBadRequest, "Nama dan Password harus diisi", "Bad Request")
 			return

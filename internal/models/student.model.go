@@ -4,9 +4,9 @@ import "mime/multipart"
 
 type StudentData struct {
 	Id       int     `db:"id" json:"-"`
-	Name     string  `db:"name" form:"name" json:"name"`
+	Name     string  `db:"name" json:"name"`
 	Role     string  `db:"role" json:"-"`
-	Password string  `db:"password" form:"pwd" json:"pwd,omitempty"`
+	Password string  `db:"password" json:"pwd,omitempty"`
 	Image    *string `db:"images" json:"image"`
 }
 
@@ -16,8 +16,9 @@ type StudentAuth struct {
 }
 
 type StudentBody struct {
-	StudentData
-	Image *multipart.FileHeader `form:"image"`
+	Name     string                `form:"name"`
+	Password string                `form:"pwd"`
+	Image    *multipart.FileHeader `form:"image"`
 }
 
 type AuthData struct {
